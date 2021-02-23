@@ -2,7 +2,7 @@ import numpy as np
 from generator.util import load_file
 
 
-class Preprocessor:
+class DataFormatter:
 
     def __init__(self, text_path, token_size = 10):
         self.text_path = text_path

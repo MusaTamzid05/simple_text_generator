@@ -1,10 +1,12 @@
 import os
-from generator.preprocessor import Preprocessor
+from generator.data_formatter import DataFormatter
 from generator.util import write_file
 
 from keras.models import Sequential
 from keras.layers import Dense
 from keras.layers import LSTM
+
+from generator.util import load_file
 
 class Trainer:
 
@@ -12,8 +14,8 @@ class Trainer:
 
         if os.path.exists(save_dir) == False:
             os.mkdir(save_dir)
-        preprocessor = Preprocessor(text_path = text_path)
-        training_sequnces = preprocessor.run()
+        formatter = DataFormatter(text_path = text_path)
+        training_sequnces = formatter.run()
 
         self.train_data_path = os.path.join(save_dir, "training_seq.txt")
 
@@ -30,7 +32,9 @@ class Trainer:
         return model
 
     def train(self):
-        pass
+        raw_text = load_file(self.train_data_path)
+
+
 
 
 

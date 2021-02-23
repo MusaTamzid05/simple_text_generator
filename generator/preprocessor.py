@@ -1,4 +1,5 @@
 import numpy as np
+from generator.util import load_file
 
 
 class Preprocessor:
@@ -9,7 +10,7 @@ class Preprocessor:
 
     def run(self):
 
-        raw_text = self._load_doc()
+        raw_text = load_file(self.text_path)
         sequences = self._make_sequence(raw_text = raw_text)
         return sequences
 
@@ -28,16 +29,6 @@ class Preprocessor:
             sequences.append(seq)
 
         return sequences
-
-
-
-
-    def _load_doc(self):
-
-        with open(self.text_path) as f:
-            text = f.read()
-
-        return text
 
 
 

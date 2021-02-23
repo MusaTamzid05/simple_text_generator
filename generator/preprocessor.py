@@ -1,34 +1,35 @@
+import numpy as np
+
 
 class Preprocessor:
 
-    def __init__(self, text_path):
+    def __init__(self, text_path, token_size = 10):
         self.text_path = text_path
+        self.token_size = token_size
 
     def run(self):
 
         raw_text = self._load_doc()
-        sequences, vocab_size = self._make_sequence(raw_text = raw_text)
-        print(vocab_size)
+        sequences = self._make_sequence(raw_text = raw_text)
+        return sequences
+
+
 
 
 
     def _make_sequence(self,  raw_text):
 
-        lines = raw_text.split("\n")
-        chars = sorted(list(set(raw_text)))
-        mapping = {}
-
-        for i, char in enumerate(chars):
-            if char not in mapping.keys() and char != "\n":
-                mapping[char] = i
-
+        tokens = raw_text.split()
+        raw_text = " ".join(tokens)
         sequences = list()
 
-        for line in lines:
-            encoded_seq = [mapping[char] for char in line]
-            sequences.append(encoded_seq)
+        for i in range(self.token_size, len(raw_text)):
+            seq = raw_text[i - self.token_size: i + 1]
+            sequences.append(seq)
 
-        return sequences, len(mapping)
+        return sequences
+
+
 
 
     def _load_doc(self):

@@ -20,19 +20,19 @@ class TrainDataPreparor:
         vocab_size = len(mapping)
         sequences = np.array(sequences)
 
-        return sequences, vocab_size
+        return sequences, vocab_size, mapping
 
 
 
     def prepare(self):
         raw_text =  load_file(self.src_path)
-        sequences, vocab_size = self._make_sequence(raw_text = raw_text)
+        sequences, vocab_size, mapping = self._make_sequence(raw_text = raw_text)
         X, y = sequences[:, :-1], sequences[:, -1]
         sequences = [to_categorical(x, num_classes = vocab_size) for x in X]
         X = np.array(sequences)
         y = to_categorical(y, num_classes = vocab_size)
 
-        return X, y
+        return X, y, mapping
 
 
 

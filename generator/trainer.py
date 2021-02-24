@@ -47,10 +47,11 @@ class Trainer:
 
     def train(self, epochs = 100, verbose = 2):
         train_data_preparor = TrainDataPreparor(src_path = self.train_data_path)
-        X, y = train_data_preparor.prepare()
+        X, y, mapping = train_data_preparor.prepare()
         model = self._init_model(width = X.shape[1], height = X.shape[2], output_size = len(y[0]))
         model.fit(X, y, epochs = epochs, verbose = verbose)
         model.save(os.path.join(self.save_dir, "model.h5"))
+        pickle.dump(mapping, open(os.path.join(self.save_dir, "mapping.pkl"), "wb"))
 
 
 
